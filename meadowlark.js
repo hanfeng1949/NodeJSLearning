@@ -2,6 +2,7 @@
  * Created by hanfeng on 2017/3/29.
  */
 var express = require('express');
+var fortune = require('./lib/fortune.js');
 var app = express();
 // 设置 handlebars 视图引擎
 var handlebars = require('express3-handlebars')
@@ -13,17 +14,8 @@ app.set('port', process.env.PORT || 3004);
 app.get('/', function(req, res) {
     res.render('home');
 });
-var fortunes = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simple.",
-];
 app.get('/about', function(req, res) {
-    var randomFortune =
-        fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render('about', { fortune: randomFortune });
+    res.render('about', { fortune: fortunes.getFortune()});
 });
 // 404 catch-all 处理器（ 中间件）
 app.use(function(req, res, next){
